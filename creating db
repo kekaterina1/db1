@@ -1,0 +1,43 @@
+CREATE TABLE branches (
+	branch_id VARCHAR (100) NOT NULL,
+	branch_city VARCHAR (100),
+	PRIMARY KEY (branch_id)
+	);
+
+CREATE TABLE employees (
+	id CHAR (100) NOT NULL,
+	branch VARCHAR (100),
+	PRIMARY KEY (id),
+	FOREIGN KEY (branch)
+		REFERENCES branches (branch_id) ON DELETE SET NULL);
+
+CREATE TABLE business_trips (
+	employee_id VARCHAR (100) NOT NULL,
+	destination VARCHAR (100) NOT NULL,
+	aim VARCHAR (1000),
+	date_begin DATE, 
+	date_end DATE,
+	flight_number VARCHAR (100) NOT NULL,
+	hotel_name VARCHAR (100) NOT NULL,
+	status VARCHAR (3),
+	dismiss_date DATE DEFAULT NULL,
+	FOREIGN KEY (employee_id) REFERENCES employees (id) ON DELETE CASCADE,
+	FOREIGN KEY (destination) REFERENCES branches (branch_id),
+	PRIMARY KEY (employee_id, date_begin)
+	);
+
+CREATE TABLE flights (
+	num VARCHAR (100) NOT NULL,
+	origin_city VARCHAR (100) NOT NULL,
+	destination_city VARCHAR (100) NOT NULL,
+	air_company VARCHAR (100),
+	departure TIMESTAMPTZ,
+	PRIMARY KEY (num)
+	);
+
+CREATE TABLE hotels(
+	name VARCHAR (100) NOT NULL,
+	addres VARCHAR (100) NOT NULL,
+	room_charge BIGINT,
+	PRIMARY KEY (name)
+	);
